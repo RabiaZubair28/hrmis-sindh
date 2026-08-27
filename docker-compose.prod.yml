@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+    restart: unless-stopped
+    env_file:
+      - ./apps/api/.env
+    environment:
+      NODE_ENV: production
+    ports:
+      - "${API_BIND_PORT:-3000}:3000"
+    volumes:
+      - leave_uploads:/app/data/leave-actions
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    restart: unless-stopped
+    ports:
+      - "${WEB_BIND_PORT:-8080}:80"
+    depends_on:
+      - api
+
+volumes:
+  leave_uploads:

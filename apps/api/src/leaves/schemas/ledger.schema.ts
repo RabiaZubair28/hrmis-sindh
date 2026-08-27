@@ -1,0 +1,3 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'; import { HydratedDocument, Types } from 'mongoose';
+@Schema({timestamps:true}) export class LeaveLedger { @Prop({type:Types.ObjectId,ref:'User',required:true,index:true}) userId!:Types.ObjectId; @Prop({type:Types.ObjectId,ref:'LeaveRequest'}) leaveRequestId?:Types.ObjectId; @Prop({required:true}) amount!:number; @Prop({required:true}) kind!:'ACCRUAL'|'DEDUCTION'|'ADJUSTMENT'; @Prop({required:true}) reason!:string; }
+export type LeaveLedgerDocument=HydratedDocument<LeaveLedger>; export const LeaveLedgerSchema=SchemaFactory.createForClass(LeaveLedger);
