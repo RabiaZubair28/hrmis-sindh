@@ -2643,3 +2643,20 @@ td b {
     transform: none !important
   }
 }
+
+/* HRMIS green native date picker */
+input[type="date"] {
+  accent-color: #078447;
+  -webkit-tap-highlight-color: rgba(7, 132, 71, 0.15);
+}
+
+input[type="date"]:focus {
+  border-color: #078447 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(7, 132, 71, 0.12);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(36%) sepia(64%) saturate(1036%) hue-rotate(111deg) brightness(87%) contrast(101%);
+}
