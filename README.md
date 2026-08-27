@@ -56,4 +56,18 @@ The seeder now reconciles an existing test account by email **or** personnel num
 6. Put HTTPS/reverse proxy in front of the web/API services and set `CORS_ORIGIN` to the exact frontend origin.
 
 Do not commit populated `.env` files. The supplied archive intentionally contains only `.env.example` templates. Leave-action uploads use a persistent Docker volume in the production compose file.
-# hrmis-sindh
+
+## Render: single web service deployment
+
+This repository is configured so one Render Web Service serves both the NestJS API and the compiled React/Vite frontend. The browser uses same-origin `/api`, so a separate frontend service or `VITE_API_URL` is not required in production.
+
+Render settings:
+
+- Service type: Web Service
+- Build command: `npm ci --include=dev && npm run build`
+- Start command: `npm run start:prod -w @hrmis/api`
+- Custom domain: `hrmis-sindh.com`
+- Environment: set `MONGODB_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `CORS_ORIGIN`, and any bootstrap-user credentials from `.env.production.example`
+- Do not manually set `PORT`; Render provides it automatically.
+
+The root URL (`/`) and React routes are served from `apps/web/dist`. API routes remain under `/api`.
